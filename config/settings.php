@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use BrewPHP\Middleware\SecurityHeadersMiddleware;
+use BrewPHP\Templates\ContextProcessors;
 
 return [
     // Detailed error pages. Never turn this on in production.
@@ -34,9 +35,19 @@ return [
 
     'ROOT_URLCONF' => 'config/urls.php',
 
-    // Project-level template folders, searched before each app's templates/.
+    // Templates: .html (and any other extension) use the BrewPHP template
+    // language, .php files are plain PHP. See https://docs.brewphp.dev/topics/templates/
     'TEMPLATES' => [
+        // Project-level template folders, searched before each app's templates/.
         'DIRS' => ['templates'],
+        // Reuse compiled templates from storage/templates until their source changes.
+        'CACHE' => true,
+        // Raise an error for a missing variable instead of printing ''.
+        'STRICT' => false,
+        // Callables that add variables to every template rendered with render().
+        'CONTEXT_PROCESSORS' => [
+            [ContextProcessors::class, 'request'],
+        ],
     ],
 
     'APP_URL' => env('APP_URL', 'http://127.0.0.1:8000'),

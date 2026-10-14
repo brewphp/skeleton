@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{# The home page of your project. Change it freely. #}
+
+{% block title %}Welcome to BrewPHP{% endblock %}
+
+{% block head %}
+<style>
+.cup { width: 64px; height: 64px; color: var(--primary); margin-bottom: 24px; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--primary); }
+h1 { font-size: 48px; line-height: 1.15; letter-spacing: -.02em; margin: 8px 0 16px; }
+.lead { font-size: 20px; color: var(--muted); max-width: 640px; margin: 0 0 48px; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 48px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+.card h2 { font-size: 18px; margin: 0 0 8px; }
+.card p { margin: 0; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 24px; font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+    <svg class="cup" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+        <path d="M10 26h36v14a16 16 0 0 1-16 16h-4a16 16 0 0 1-16-16z"/>
+        <path d="M46 30h4a7 7 0 0 1 0 14h-5"/>
+        <path d="M22 8c-3 4 3 6 0 10M32 8c-3 4 3 6 0 10"/>
+    </svg>
+    <div class="eyebrow">BrewPHP {{ version }}</div>
+    <h1>Welcome to BrewPHP</h1>
+    <p class="lead">Your project is up and running. Here is where to go next.</p>
+
+    <div class="steps">
+        <div class="card">
+            <h2>Edit this page</h2>
+            <p>It lives in <code>apps/pages/templates/pages/home.html</code> and extends <code>templates/base.html</code>. The <code>home</code> view in <code>apps/pages/views.php</code> renders it.</p>
+        </div>
+        <div class="card">
+            <h2>Add a route</h2>
+            <p>Map URLs to views in <code>apps/pages/urls.php</code>, then list them with <code>php manage.php routes</code>.</p>
+        </div>
+        <div class="card">
+            <h2>Check your setup</h2>
+            <p>Run <code>php manage.php check</code> to catch configuration problems early.</p>
+        </div>
+    </div>
+
+    <nav class="links">
+        <a href="https://docs.brewphp.dev">Documentation</a>
+        <a href="https://docs.brewphp.dev/topics/templates/">Templates</a>
+        <a href="https://docs.brewphp.dev/topics/routing/">Routing</a>
+        <a href="https://docs.brewphp.dev/topics/views/">Views</a>
+        <a href="https://docs.brewphp.dev/cli/overview/">manage.php</a>
+        <a href="https://github.com/brewphp/brewphp">GitHub</a>
+    </nav>
+{% endblock %}

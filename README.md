@@ -39,13 +39,22 @@ php manage.php key:generate
 config/settings.php   settings (values from .env)
 config/urls.php       root URLconf
 apps/pages/           the sample "pages" app: views, urls, templates, tests
-templates/            project-level templates (override any app template)
+templates/            project-level templates: base.html layout, overrides of app templates
 static/               project static files
 media/                user uploads
 storage/              cache, logs, sessions, compiled templates, SQLite database
 public/index.php      front controller: point your web server here
 manage.php            command-line entry point
 ```
+
+## Templates
+
+Pages are `.html` templates in the BrewPHP template language, which works
+like Django's: `{{ variable }}`, `{% tag %}` and `{% extends %}`. The home
+page `apps/pages/templates/pages/home.html` extends the layout
+`templates/base.html`. Templates are compiled to PHP once and cached in
+`storage/templates/`. See the
+[templates documentation](https://docs.brewphp.dev/topics/templates/).
 
 ## Database
 

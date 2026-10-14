@@ -17,7 +17,9 @@ final class HomeTest extends TestCase
         $response = $app->handle(Request::create('GET', '/'));
 
         self::assertSame(200, $response->status());
-        self::assertStringContainsString('Welcome to BrewPHP', $response->content());
+        self::assertStringContainsString('<title>Welcome to BrewPHP</title>', $response->content());
+        self::assertStringContainsString('BrewPHP ' . Application::VERSION, $response->content());
+        self::assertStringContainsString('</footer>', $response->content());
         self::assertSame('/', reverse('pages:home'));
     }
 }
