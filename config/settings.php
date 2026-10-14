@@ -44,4 +44,18 @@ return [
     'LANGUAGE' => 'en',
     'STATIC_URL' => '/static/',
     'MEDIA_URL' => '/media/',
+
+    // Database connections; models use "default". SQLite needs no server:
+    // the database is the file storage/db.sqlite3. ENGINE can also be
+    // 'mysql' or 'pgsql'. See https://docs.brewphp.dev/topics/databases/
+    'DATABASES' => [
+        'default' => [
+            'ENGINE' => env('DB_ENGINE', 'sqlite'),
+            'NAME' => env('DB_NAME', 'storage/db.sqlite3'),
+            'HOST' => env('DB_HOST', '127.0.0.1'),
+            'PORT' => env('DB_PORT'),
+            'USER' => env('DB_USER', ''),
+            'PASSWORD' => env('DB_PASSWORD', ''),
+        ],
+    ],
 ];

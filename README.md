@@ -42,10 +42,18 @@ apps/pages/           the sample "pages" app: views, urls, templates, tests
 templates/            project-level templates (override any app template)
 static/               project static files
 media/                user uploads
-storage/              cache, logs, sessions, compiled templates
+storage/              cache, logs, sessions, compiled templates, SQLite database
 public/index.php      front controller: point your web server here
 manage.php            command-line entry point
 ```
+
+## Database
+
+The project uses SQLite out of the box: the database is the file
+`storage/db.sqlite3`, created on first use. To use MySQL or PostgreSQL, set
+the `DB_*` variables in `.env` (see `.env.example`). Until migrations
+arrive in BrewPHP 0.4, create tables with the schema editor, as explained in
+the [models documentation](https://docs.brewphp.dev/topics/models/#creating-the-tables).
 
 Read the documentation at <https://docs.brewphp.dev>.
 

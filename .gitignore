@@ -2,5 +2,7 @@
 .env
 /media/*
 !/media/.gitignore
+/storage/*.sqlite3
+/storage/*.sqlite3-*
 .phpunit.cache/
 .phpunit.result.cache
