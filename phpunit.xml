@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         cacheDirectory=".phpunit.cache"
+         colors="true">
+    <testsuites>
+        <testsuite name="Apps">
+            <directory>apps</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <!-- Tests run like production, whatever your .env says. -->
+        <env name="DEBUG" value="false" force="true"/>
+        <env name="ALLOWED_HOSTS" value="localhost" force="true"/>
+        <env name="SECRET_KEY" value="test-secret-key-do-not-use-in-production" force="true"/>
+    </php>
+</phpunit>

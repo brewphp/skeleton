@@ -1,0 +1,39 @@
+{
+    "name": "brewphp/skeleton",
+    "description": "Starter project for BrewPHP, the small Django-inspired PHP framework.",
+    "type": "project",
+    "license": "MIT",
+    "keywords": ["brewphp", "framework", "skeleton", "starter"],
+    "homepage": "https://docs.brewphp.dev",
+    "require": {
+        "php": ">=8.2",
+        "brewphp/brewphp": "@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../brewphp",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php manage.php key:generate --ansi"
+        ],
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

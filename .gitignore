@@ -1,0 +1,6 @@
+/vendor/
+.env
+/media/*
+!/media/.gitignore
+.phpunit.cache/
+.phpunit.result.cache
