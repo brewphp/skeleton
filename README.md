@@ -27,6 +27,10 @@ php manage.php key:generate
 | Command | What it does |
 |---|---|
 | `php manage.php serve` | Start the development server on 127.0.0.1:8000 |
+| `php manage.php startapp blog` | Create a new app in `apps/blog/` |
+| `php manage.php makemigrations` | Write migrations for changes to your models |
+| `php manage.php migrate` | Apply migrations to the database |
+| `php manage.php showmigrations` | List migrations and whether they are applied |
 | `php manage.php routes` | List every URL pattern |
 | `php manage.php check` | Look for configuration problems |
 | `php manage.php about` | Show versions and installed apps |
@@ -60,9 +64,18 @@ page `apps/pages/templates/pages/home.html` extends the layout
 
 The project uses SQLite out of the box: the database is the file
 `storage/db.sqlite3`, created on first use. To use MySQL or PostgreSQL, set
-the `DB_*` variables in `.env` (see `.env.example`). Until migrations
-arrive in BrewPHP 0.4, create tables with the schema editor, as explained in
-the [models documentation](https://docs.brewphp.dev/topics/models/#creating-the-tables).
+the `DB_*` variables in `.env` (see `.env.example`).
+
+Tables come from migrations, like in Django. After adding or changing models
+in an app, write the migration and apply it:
+
+```bash
+php manage.php makemigrations
+php manage.php migrate
+```
+
+Commit the files in `apps/<app>/migrations/` with your code. See the
+[migrations documentation](https://docs.brewphp.dev/topics/migrations/).
 
 Read the documentation at <https://docs.brewphp.dev>.
 
