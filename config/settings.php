@@ -28,8 +28,9 @@ return [
     'ALLOWED_HOSTS' => array_values(array_filter(array_map('trim', explode(',', (string) env('ALLOWED_HOSTS', ''))))),
 
     // Apps of this project: 'pages' is the folder apps/pages/. The brewphp.*
-    // apps are built in: users and permissions, and database sessions.
+    // apps are built in: the admin, users and permissions, and database sessions.
     'INSTALLED_APPS' => [
+        'brewphp.admin',
         'brewphp.auth',
         'brewphp.sessions',
         'pages',

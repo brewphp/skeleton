@@ -30,7 +30,7 @@ Then create your first user, with every permission:
 php manage.php createsuperuser
 ```
 
-and log in at <http://127.0.0.1:8000/accounts/login/>.
+and log in to the admin at <http://127.0.0.1:8000/admin/>.
 
 ## Useful commands
 
@@ -89,6 +89,23 @@ php manage.php migrate
 
 Commit the files in `apps/<app>/migrations/` with your code. See the
 [migrations documentation](https://docs.brewphp.dev/topics/migrations/).
+
+## The admin
+
+The automatic admin lives at `/admin/`. To manage a model there, register
+it in its app's `admin.php` (`startapp` creates one):
+
+```php
+#[Register(Post::class)]
+final class PostAdmin extends ModelAdmin
+{
+    public array $listDisplay = ['title', 'published_at'];
+    public array $searchFields = ['title'];
+}
+```
+
+Only staff users get in, and each one sees what their permissions allow.
+See the [admin documentation](https://docs.brewphp.dev/topics/admin/).
 
 ## Accounts and security
 
