@@ -40,11 +40,31 @@ a:hover { color: var(--accent); }
 code { font-family: var(--mono); font-size: 14px; background: var(--code-bg); padding: 2px 6px; border-radius: 4px; }
 main { max-width: 960px; margin: 0 auto; padding: 96px 24px 48px; }
 footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
+.account { position: absolute; top: 20px; right: 24px; display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--muted); }
+.account form { margin: 0; }
+.account button { font: inherit; color: var(--primary); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+.messages { list-style: none; padding: 0; margin: 0 0 24px; }
+.messages li { padding: 10px 14px; border-radius: 8px; background: var(--code-bg); border: 1px solid var(--border); }
 </style>
 {% block head %}{% endblock %}
 </head>
 <body>
 <main>
+    <nav class="account">
+        {% if user.is_authenticated %}
+            {{ user.username }}
+            <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">Log out</button></form>
+        {% else %}
+            <a href="{% url 'login' %}">Log in</a>
+        {% endif %}
+    </nav>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+        </ul>
+    {% endif %}
+
     {% block content %}{% endblock %}
 
     <footer>

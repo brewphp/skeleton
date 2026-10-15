@@ -10,7 +10,11 @@ declare(strict_types=1);
  * https://docs.brewphp.dev/getting-started/configuration/
  */
 
+use BrewPHP\Auth\AuthenticationMiddleware;
+use BrewPHP\Auth\Validators;
 use BrewPHP\Middleware\SecurityHeadersMiddleware;
+use BrewPHP\Security\CsrfViewMiddleware;
+use BrewPHP\Sessions\SessionMiddleware;
 use BrewPHP\Templates\ContextProcessors;
 
 return [
@@ -23,14 +27,21 @@ return [
     // Domain names this site serves. A leading dot matches subdomains.
     'ALLOWED_HOSTS' => array_values(array_filter(array_map('trim', explode(',', (string) env('ALLOWED_HOSTS', ''))))),
 
-    // Apps of this project: 'pages' is the folder apps/pages/.
+    // Apps of this project: 'pages' is the folder apps/pages/. The brewphp.*
+    // apps are built in: users and permissions, and database sessions.
     'INSTALLED_APPS' => [
+        'brewphp.auth',
+        'brewphp.sessions',
         'pages',
     ],
 
-    // Run around every request, outermost first.
+    // Run around every request, outermost first. Sessions must come before
+    // authentication; CSRF protection checks every POST form.
     'MIDDLEWARE' => [
         SecurityHeadersMiddleware::class,
+        SessionMiddleware::class,
+        CsrfViewMiddleware::class,
+        AuthenticationMiddleware::class,
     ],
 
     'ROOT_URLCONF' => 'config/urls.php',
@@ -47,7 +58,24 @@ return [
         // Callables that add variables to every template rendered with render().
         'CONTEXT_PROCESSORS' => [
             [ContextProcessors::class, 'request'],
+            [ContextProcessors::class, 'auth'],      // user and perms
+            [ContextProcessors::class, 'messages'],  // flash messages
         ],
+    ],
+
+    // Sessions and logins. On an HTTPS site, set SECURE_COOKIES=true in .env
+    // so the session and CSRF cookies are never sent over plain HTTP.
+    'SESSION_COOKIE_SECURE' => env('SECURE_COOKIES', false),
+    'CSRF_COOKIE_SECURE' => env('SECURE_COOKIES', false),
+    'LOGIN_URL' => 'login',
+    'LOGIN_REDIRECT_URL' => '/',
+
+    // Rules for new passwords. See https://docs.brewphp.dev/topics/auth/
+    'AUTH_PASSWORD_VALIDATORS' => [
+        new Validators\UserAttributeSimilarityValidator(),
+        new Validators\MinimumLengthValidator(minLength: 10),
+        new Validators\CommonPasswordValidator(),
+        new Validators\NumericPasswordValidator(),
     ],
 
     'APP_URL' => env('APP_URL', 'http://127.0.0.1:8000'),

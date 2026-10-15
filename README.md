@@ -13,14 +13,24 @@ php manage.php serve
 
 Open <http://127.0.0.1:8000/> and you should see the welcome page.
 
-`create-project` already copied `.env.example` to `.env` and generated a
-`SECRET_KEY`. If you cloned this project instead, do it yourself:
+`create-project` already copied `.env.example` to `.env`, generated a
+`SECRET_KEY` and created the database tables. If you cloned this project
+instead, do it yourself:
 
 ```bash
 composer install
 cp .env.example .env
 php manage.php key:generate
+php manage.php migrate
 ```
+
+Then create your first user, with every permission:
+
+```bash
+php manage.php createsuperuser
+```
+
+and log in at <http://127.0.0.1:8000/accounts/login/>.
 
 ## Useful commands
 
@@ -31,6 +41,9 @@ php manage.php key:generate
 | `php manage.php makemigrations` | Write migrations for changes to your models |
 | `php manage.php migrate` | Apply migrations to the database |
 | `php manage.php showmigrations` | List migrations and whether they are applied |
+| `php manage.php createsuperuser` | Create a user with every permission |
+| `php manage.php changepassword ann` | Change a user's password |
+| `php manage.php clearsessions` | Delete expired sessions (run it from cron) |
 | `php manage.php routes` | List every URL pattern |
 | `php manage.php check` | Look for configuration problems |
 | `php manage.php about` | Show versions and installed apps |
@@ -76,6 +89,20 @@ php manage.php migrate
 
 Commit the files in `apps/<app>/migrations/` with your code. See the
 [migrations documentation](https://docs.brewphp.dev/topics/migrations/).
+
+## Accounts and security
+
+The project comes with users, sessions and CSRF protection turned on
+(`config/settings.php`):
+
+- `/accounts/login/`, `/accounts/logout/` and `/accounts/password_change/`
+  are the built-in pages; restyle them by creating `templates/registration/`
+  files with the same names.
+- Every form that posts data needs `{% csrf_token %}` inside the `<form>`.
+- In production, set `SECURE_COOKIES=true` in `.env` and run
+  `php manage.php check --deploy`.
+
+See the [authentication documentation](https://docs.brewphp.dev/topics/auth/).
 
 Read the documentation at <https://docs.brewphp.dev>.
 
