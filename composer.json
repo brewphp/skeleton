@@ -7,20 +7,11 @@
     "homepage": "https://docs.brewphp.dev",
     "require": {
         "php": ">=8.2",
-        "brewphp/brewphp": "@dev"
+        "brewphp/brewphp": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../brewphp",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "scripts": {
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

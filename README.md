@@ -125,9 +125,13 @@ Read the documentation at <https://docs.brewphp.dev>.
 
 ## Note for BrewPHP contributors
 
-While BrewPHP is in development, `composer.json` uses a Composer
-[path repository](https://getcomposer.org/doc/05-repositories.md#path)
-pointing to `../brewphp` and requires `brewphp/brewphp: @dev`, so the
-skeleton always runs against the framework checkout next to it. Before the
-first release, the path repository is removed and the constraint becomes
-`^0.1` (this is on the release checklist).
+The skeleton requires `brewphp/brewphp: ^1.0` from Packagist. To work on the
+framework and the skeleton together, point Composer at your local checkout
+without committing the change:
+
+```bash
+composer config repositories.brewphp '{"type": "path", "url": "../brewphp", "options": {"symlink": true}}'
+composer require brewphp/brewphp:@dev
+```
+
+Undo it with `git checkout composer.json` before committing.
